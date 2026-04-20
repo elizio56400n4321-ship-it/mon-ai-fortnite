@@ -1,15 +1,33 @@
-<main>
-    <section class="chat-box">
-        <div id="chat-display">
-            <p><strong>IA :</strong> Salut ! Demande-moi de créer un truc pour ton projet UEFN.</p>
-        </div>
-        <div class="input-area">
-            <input type="text" id="user-input" placeholder="Ex: Fais-moi un garde qui soigne...">
-            <button onclick="askAI()">Envoyer</button>
-        </div>
-    </section>
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>UEFN AI Builder</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>UEFN AI BUILDER</h1>
+        <p>Génère ton code Verse pour Fortnite</p>
+    </header>
 
-    <section class="output">
-        <pre id="code-display">// Le code Verse généré apparaîtra ici...</pre>
-    </section>
-</main>
+    <main>
+        <div class="chat-container">
+            <div id="chat-display">
+                <p><strong>IA :</strong> Salut ! Dis-moi ce que tu veux créer (ex: "un garde", "une zone de soin", "donner une arme").</p>
+            </div>
+            
+            <div class="input-box">
+                <input type="text" id="user-input" placeholder="Tape ta demande ici...">
+                <button onclick="askAI()">Envoyer</button>
+            </div>
+        </div>
+
+        <section class="output">
+            <pre id="code-display">// Le code Verse apparaîtra ici...</pre>
+        </section>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
