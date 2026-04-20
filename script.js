@@ -3,30 +3,33 @@ function askAI() {
     const chatDisplay = document.getElementById('chat-display');
     const codeDisplay = document.getElementById('code-display');
 
-    // Ajouter ton message au chat
-    chatDisplay.innerHTML += `<p><strong>Toi :</strong> ${input}</p>`;
+    if(input === "") return; // Ne rien faire si c'est vide
 
-    // Logique de réponse "intelligente"
-    let response = "";
-    let verseCode = "";
+    chatDisplay.innerHTML += `<p style="color: #007aff;"><strong>Toi :</strong> ${input}</p>`;
 
-    if (input.includes("garde") || input.includes("ennemi")) {
-        response = "D'accord, je génère un script de Garde Sentinelle.";
-        verseCode = "using { /Fortnite.com/Devices }\n# Script Garde\nOnBegin<override>():void=\n    Print(\"Le garde surveille la zone\")";
+    let response = "Je ne comprends pas bien. Essaie 'garde', 'soin' ou 'arme'.";
+    let code = "// Aucun code généré";
+
+    // Système de réponses intelligentes
+    if(input.includes("garde")) {
+        response = "Voici un code pour faire apparaître un garde qui patrouille.";
+        code = "using { /Fortnite.com/Devices }\n# Code Garde UEFN\nOnBegin<override>():void=\n    Print(\"Garde prêt !\")";
     } 
-    else if (input.includes("soin") || input.includes("soigne")) {
-        response = "Voici un script pour une zone de soin automatique.";
-        verseCode = "using { /Fortnite.com/Devices }\n# Script Soin\nOnBegin<override>():void=\n    Print(\"Zone de soin activée\")";
+    else if(input.includes("soin") || input.includes("soigne")) {
+        response = "D'accord, je génère une zone qui redonne de la vie.";
+        code = "using { /Fortnite.com/Devices }\n# Code Soin\nOnBegin<override>():void=\n    Print(\"Zone de soin active\")";
     }
-    else {
-        response = "Je ne connais pas encore ce truc, mais je peux faire un garde ou un soigneur !";
-        verseCode = "// Commande non reconnue";
+    else if(input.includes("arme") || input.includes("donner")) {
+        response = "Voici le code pour donner une arme via un bouton.";
+        code = "using { /Fortnite.com/Devices }\n# Item Spawner Code\nOnBegin<override>():void=\n    Print(\"Arme distribuée\")";
     }
 
-    // Réponse de l'IA
+    // L'IA répond après un petit délai
     setTimeout(() => {
         chatDisplay.innerHTML += `<p><strong>IA :</strong> ${response}</p>`;
-        codeDisplay.innerText = verseCode;
-        document.getElementById('user-input').value = ""; // Vide la barre
-    }, 500);
+        codeDisplay.innerText = code;
+        chatDisplay.scrollTop = chatDisplay.scrollHeight; // Scroll vers le bas
+    }, 600);
+
+    document.getElementById('user-input').value = ""; // Vide la barre
 }
