@@ -33,3 +33,9 @@ function askAI() {
 
     document.getElementById('user-input').value = ""; // Vide la barre
 }
+// Permet d'envoyer en appuyant sur la touche Entrée du clavier
+document.getElementById("user-input").addEventListener("keypress", function(event) {
+  if (event.key === "Enter") {
+    askAI();
+  }
+});
