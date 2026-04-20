@@ -3,39 +3,49 @@ function askAI() {
     const chatDisplay = document.getElementById('chat-display');
     const codeDisplay = document.getElementById('code-display');
 
-    if(input === "") return; // Ne rien faire si c'est vide
+    if(input === "") return;
 
     chatDisplay.innerHTML += `<p style="color: #007aff;"><strong>Toi :</strong> ${input}</p>`;
 
-    let response = "Je ne comprends pas bien. Essaie 'garde', 'soin' ou 'arme'.";
-    let code = "// Aucun code généré";
+    let response = "Désolé, je ne connais pas encore cette fonction UEFN. Pose-moi une question sur Verse, les appareils ou les personnages !";
+    let code = "// En attente d'une demande précise...";
 
-    // Système de réponses intelligentes
-    if(input.includes("garde")) {
-        response = "Voici un code pour faire apparaître un garde qui patrouille.";
-        code = "using { /Fortnite.com/Devices }\n# Code Garde UEFN\nOnBegin<override>():void=\n    Print(\"Garde prêt !\")";
+    // --- BASE DE CONNAISSANCES UEFN & VERSE ---
+
+    if(input.includes("uefn") || input.includes("c'est quoi")) {
+        response = "L'UEFN (Unreal Editor for Fortnite) est une version de l'Unreal Engine pour créer des maps Fortnite pro. On utilise le langage **Verse** pour coder.";
+        code = "# Bienvenue dans l'UEFN !\n# Utilise Verse pour créer tes propres règles.";
     } 
-    else if(input.includes("soin") || input.includes("soigne")) {
-        response = "D'accord, je génère une zone qui redonne de la vie.";
-        code = "using { /Fortnite.com/Devices }\n# Code Soin\nOnBegin<override>():void=\n    Print(\"Zone de soin active\")";
+    else if(input.includes("verse")) {
+        response = "Verse est le langage de programmation d'Epic Games. Il est fait pour être rapide et éviter les bugs dans tes jeux.";
+        code = "using { /Verse.org/Simulation }\nusing { /Fortnite.com/Devices }\n\nhello_world_device := class(creative_device):\n    OnBegin<override>()<suspends> : void =\n        Print(\"Bonjour le monde Verse !\")";
     }
-    else if(input.includes("arme") || input.includes("donner")) {
-        response = "Voici le code pour donner une arme via un bouton.";
-        code = "using { /Fortnite.com/Devices }\n# Item Spawner Code\nOnBegin<override>():void=\n    Print(\"Arme distribuée\")";
+    else if(input.includes("voler") || input.includes("vol")) {
+        response = "Pour faire voler un joueur, on utilise la fonction `SetAllowFlying` sur son `fort_character`.";
+        code = "using { /Fortnite.com/Characters }\n\n# Code : Autoriser le vol\nif (FC := Agent.GetFortCharacter[]): \n    FC.SetAllowFlying(true)";
+    }
+    else if(input.includes("saut") || input.includes("gravité")) {
+        response = "Tu peux modifier la hauteur de saut d'un joueur avec le multiplicateur de mouvement.";
+        code = "# Code : Super Saut\nif (FC := Agent.GetFortCharacter[]):\n    # Multiplie la force de mouvement\n    FC.SetMovementSpeedMultiplier(2.5)";
+    }
+    else if(input.includes("appareil") || input.includes("device")) {
+        response = "Dans Verse, on appelle les objets des `creative_device`. Tu peux les lier entre eux dans l'éditeur.";
+        code = "mon_appareil := class(creative_device):\n    @edit\n    MonBouton : button_device = button_device{}";
+    }
+    else if(input.includes("pv") || input.includes("vie") || input.includes("mort")) {
+        response = "Pour changer la vie (PV), on accède aux caractéristiques du personnage.";
+        code = "# Code : Vie Max\nif (FC := Agent.GetFortCharacter[]):\n    FC.SetMaxHealth(200.0)\n    FC.SetHealth(200.0)";
     }
 
-    // L'IA répond après un petit délai
+    // Réponse de l'IA avec effet de réflexion
     setTimeout(() => {
-        chatDisplay.innerHTML += `<p><strong>IA :</strong> ${response}</p>`;
+        chatDisplay.innerHTML += `<p style="color: #ffffff;"><strong>IA Expert UEFN :</strong> ${response}</p>`;
         codeDisplay.innerText = code;
-        chatDisplay.scrollTop = chatDisplay.scrollHeight; // Scroll vers le bas
-    }, 600);
+        chatDisplay.scrollTop = chatDisplay.scrollHeight;
+    }, 400);
 
-    document.getElementById('user-input').value = ""; // Vide la barre
+    document.getElementById('user-input').value = "";
 }
-// Permet d'envoyer en appuyant sur la touche Entrée du clavier
-document.getElementById("user-input").addEventListener("keypress", function(event) {
-  if (event.key === "Enter") {
-    askAI();
-  }
-});
+
+// Support de la touche Entrée
+document.getElementById("user-input").addEventListener("keypress", (e) => { if (e.key === "Enter") askAI(); });
