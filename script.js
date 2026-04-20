@@ -49,3 +49,40 @@ function askAI() {
 
 // Support de la touche Entrée
 document.getElementById("user-input").addEventListener("keypress", (e) => { if (e.key === "Enter") askAI(); });
+async function askAI() {
+    const input = document.getElementById('user-input').value;
+    const chatDisplay = document.getElementById('chat-display');
+    const codeDisplay = document.getElementById('code-display');
+
+    if(!input) return;
+
+    chatDisplay.innerHTML += `<p style="color: #007aff;"><strong>Toi :</strong> ${input}</p>`;
+    document.getElementById('user-input').value = "";
+
+    chatDisplay.innerHTML += `<p id="loading"><strong>IA :</strong> En train de réfléchir au code Verse...</p>`;
+
+    try {
+        // On envoie ta demande à une vraie IA de code (Mistral ou Llama)
+        const response = await fetch(
+            "https://api-inference.huggingface.co/models/MistralAI/Mistral-7B-Instruct-v0.2",
+            {
+                headers: { "Content-Type": "application/json" },
+                method: "POST",
+                body: JSON.stringify({
+                    inputs: `Tu es un expert UEFN Fortnite. Écris un script en langage Verse pour : ${input}`,
+                }),
+            }
+        );
+
+        const result = await response.json();
+        const aiText = result[0].generated_text;
+
+        // On nettoie l'affichage
+        document.getElementById('loading').remove();
+        chatDisplay.innerHTML += `<p><strong>IA :</strong> Voici ce que j'ai créé pour toi :</p>`;
+        codeDisplay.innerText = aiText; // L'IA affiche le code qu'elle vient d'inventer
+
+    } catch (error) {
+        document.getElementById('loading').innerText = "IA : Erreur de connexion au cerveau externe.";
+    }
+}
