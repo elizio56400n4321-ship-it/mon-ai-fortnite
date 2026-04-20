@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>UEFN AI Generator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>UEFN AI Builder</h1>
+        <p>Génère ton code Verse pour Fortnite</p>
+    </header>
+
+    <main>
+        <section class="config">
+            <label>Type d'IA :</label>
+            <select id="ai-type">
+                <option value="guard">Garde Sentinelle</option>
+                <option value="boss">Boss de Zone</option>
+                <option value="healer">PNJ Soigneur</option>
+            </select>
+            <button onclick="generateCode()">Générer le code Verse</button>
+        </section>
+
+        <section class="output">
+            <pre id="code-display">// Le code apparaîtra ici...</pre>
+        </section>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
